@@ -1,0 +1,45 @@
+v0.3.6	30 Dec 2009
+
+	- fixed name bug in the server view
+	- added javascript message translation
+
+
+v0.3.5	29 Dec 2009
+
+	- UTF-8 charset
+	- more settings in channels backups
+	- improved server view (layout & added functions)
+	- full ban list support
+
+
+v0.3.4	28 Dec 2009
+
+	- less minimalistic design
+	- basic live server view
+	- several small bugfixes
+
+
+v0.3.3	27 Dec 2009
+
+	- improved token management
+	- added channel backup function
+	- no new configuration needed after updates
+
+
+v0.3.2	26 Dec 2009
+
+	- fixed javascript in IE 8
+	- added token support
+	- a little internal code cleanup
+
+
+v0.3.1	26 Dec 2009
+
+	- added english language support
+	- fixed language support for the update notification
+	- fixed vServer listing if there is only one server
+
+
+v0.3.0	26 Dec 2009
+
+	- initial release
