@@ -33,6 +33,14 @@ var TS3Webinterface = {
         );
     }, 
 
+    getInfo: function() {
+        this.executePost({
+            do: "serverinfo"
+        }, function(data) {
+            console.log(data);
+        });
+    },
+
     executePost: function(options, callback) {
         options.ajaxRequest = 1;
         $.post('index.php', options, function(data) {

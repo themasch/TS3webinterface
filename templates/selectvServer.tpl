@@ -17,15 +17,19 @@
         <td class="table0"><b>Optionen</b></td>  <!-- TODO: translation -->
     </tr>
 {foreach from=$selectvServer item=curvServer}
-    <tr class="{cycle values="table2,table1"}">
+    <tr class="{cycle values="table2,table1"}" id="serverrow_{$curvServer.virtualserver_id}">
         <td>{$curvServer.virtualserver_id}</td>
         <td>{$curvServer.virtualserver_name}</td>
         <td>{$IP}:{$curvServer.virtualserver_port}</td>
-        <td style="text-align: center">
-            <img id="serverstatus{$curvServer.virtualserver_id}" src="{if $curvServer.virtualserver_status=="none"||$curvServer.virtualserver_status=="offline"}./images/red.png{else}./images/green.png{/if}" style="margin: auto;">
-        </td>
-        <td>{$curvServer.virtualserver_clientsonline} of {$curvServer.virtualserver_maxclients}</td>
-        <td>{$webinterface->parseTime($curvServer.virtualserver_uptime)}</td>
+        {if $curvServer.virtualserver_status=="none"||$curvServer.virtualserver_status=="offline"}
+            <td style="text-align: center"> <img class="status" src="./images/red.png" /> </td>
+            <td class="clients"></td>
+            <td class="uptime"></td>
+        {else}
+            <td style="text-align: center"> <img class="status" src="./images/green.png" /> </td>
+            <td class="clients">{$curvServer.virtualserver_clientsonline} of {$curvServer.virtualserver_maxclients}</td>
+            <td class="uptime">{$webinterface->parseTime($curvServer.virtualserver_uptime)}</td>
+        {/if}
         <td>
             <img src="./images/start.png" class="btn_start" data-vsid="{$curvServer.virtualserver_id}" />
             <img src="./images/stop.png" class="btn_stop" data-vsid="{$curvServer.virtualserver_id}" />

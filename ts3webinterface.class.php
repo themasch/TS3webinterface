@@ -273,6 +273,15 @@ class TS3webinterface
 			
 			switch($_POST['do'])
 			{
+                case 'serverinfo':
+                    $vServerList = $this->server->r_serverlist();
+                    if( !isset($vServerList[0]) )
+                    {
+                        $tmp = array($vServerList);
+                        $vServerList = $tmp;
+                    }
+                    $response = array('OK', $vServerList);
+                    break;
 				case 'serveredit':
 					if( !empty($_POST['serverprop']) && isset($_POST['value']) )
 					{
