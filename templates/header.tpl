@@ -5,7 +5,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>{$title}</title>
 <link href="webinterface.css" rel="stylesheet" type="text/css" />
+<link href="jquery.prompt.css" rel="stylesheet" type="text/css" />
 <script src="js/jquery.min.js" type="text/javascript"></script>
+<script src="js/jquery.blockui.js" type="text/javascript"></script>
+<script src="js/jquery.prompt.js" type="text/javascript"></script>
 <script src="webinterface.js" type="text/javascript"></script>
 <script src="js/main.js" type="text/javascript"></script>
 </head>

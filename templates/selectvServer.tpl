@@ -17,7 +17,7 @@
         <td class="table0"><b>Optionen</b></td>  <!-- TODO: translation -->
     </tr>
 {foreach from=$selectvServer item=curvServer}
-    <tr class="{cycle values="table2,table1"}" id="serverrow_{$curvServer.virtualserver_id}">
+    <tr class="{cycle values="table2,table1"}" data-vid="{$curvServer.virtualserver_id}">
         <td>{$curvServer.virtualserver_id}</td>
         <td>{$curvServer.virtualserver_name}</td>
         <td>{$IP}:{$curvServer.virtualserver_port}</td>
@@ -25,15 +25,20 @@
             <td style="text-align: center"> <img class="status" src="./images/red.png" /> </td>
             <td class="clients"></td>
             <td class="uptime"></td>
+            <td>
+                <img src="./images/start.png" class="btn_start" />
+                <img src="./images/delete.png" class="btn_delete" />
+            </td>
         {else}
             <td style="text-align: center"> <img class="status" src="./images/green.png" /> </td>
-            <td class="clients">{$curvServer.virtualserver_clientsonline} of {$curvServer.virtualserver_maxclients}</td>
+            <td class="clients">{$curvServer.virtualserver_clientsonline} / {$curvServer.virtualserver_maxclients}</td>
             <td class="uptime">{$webinterface->parseTime($curvServer.virtualserver_uptime)}</td>
+            <td>
+                <img src="./images/stop.png" class="btn_stop" />
+                <img src="./images/settings.png" class="btn_edit" />
+                <img src="./images/delete.png" class="btn_delete" />
+            </td>
         {/if}
-        <td>
-            <img src="./images/start.png" class="btn_start" data-vsid="{$curvServer.virtualserver_id}" />
-            <img src="./images/stop.png" class="btn_stop" data-vsid="{$curvServer.virtualserver_id}" />
-        </td>
     </tr>
 {/foreach}
 </table>
@@ -53,7 +58,7 @@
 	</span>-->
 <br />
 
-<fieldset style="float: left;" id="form_create">
+<fieldset style="text-align: left;"  id="form_create">
     <legend>{$lang.vsselect_new_headline}</legend>
 {if !empty($addData)}
 	{if $addData[0]|upper == "ERROR"}

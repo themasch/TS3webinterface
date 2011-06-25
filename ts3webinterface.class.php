@@ -1113,21 +1113,18 @@ class TS3webinterface
 	
 	public function parseTime($timeSeconds)
 	{
-		//$timeSeconds = round($timeSeconds / 1000);
-		
-		$days = floor($timeSeconds / 86400);
-		$daysForm = ( $days === 1 ) ? $this->language['time_day'] : $this->language['time_days'];
-		
-		$hours = floor(($timeSeconds % 86400) / 3600);
-		$hoursForm = ( $days === 1 ) ? $this->language['time_hour'] : $this->language['time_hours'];
-		
-		$minutes = floor(($timeSeconds % 3600) / 60);
-		$minutesForm = ( $days === 1 ) ? $this->language['time_minute'] : $this->language['time_minutes'];
-		
-		$seconds = $timeSeconds % 60;
-		$secondsForm = ( $days === 1 ) ? $this->language['time_second'] : $this->language['time_seconds'];
-		
-		return "$days $daysForm, $hours $hoursForm, $minutes $minutesForm, $seconds $secondsForm";
+        $seconds = $timeSeconds;
+        $minutes = $seconds / 60;
+        $hours   = $minutes / 60;
+        $days    = $hours   / 24;
+        $minutes = floor($minutes % 60); 
+        $seconds = floor($seconds % 60); 
+        $hours   = floor($hours % 24); 
+        $str     = floor($days) . 'd ';
+        $str    .= ($hours < 10 ? '0'.$hours : $hours) . ':';
+        $str    .= ($minutes < 10 ? '0'.$minutes : $minutes) . ':';
+        $str    .= ($seconds < 10 ? '0'.$seconds : $seconds);
+        return $str;
 	}
 	public function parseDate($timeSeconds, $add=0, $format='r')
 	{
