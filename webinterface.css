@@ -177,6 +177,11 @@ img.viewer {
     padding: 5px;
 }
 
+.btn_create:hover {
+    background-color: #CFC;
+    background-color: rgba(100, 255, 100, 0.3);
+}
+
 #form_create {
     display: none;
     margin: auto;

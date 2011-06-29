@@ -15,19 +15,28 @@ var TS3Webinterface = {
                     if(!row) {
                         //TODO: add row for new server
                     } else {
-                       if(dat.virtualserver_status == 'online') {
-                           var time = sec2date(dat.virtualserver_uptime);
-                           var time_str = time[0] + 'd ';
-                           time_str += ((time[1] < 10) ? '0' + time[1] : time[1]) + ":";
-                           time_str += ((time[2] < 10) ? '0' + time[2] : time[2]) + ":";
-                           time_str += ((time[3] < 10) ? '0' + time[3] : time[3]);
-                           $('.uptime', row).text(time_str);
-                           $('.clients', row).text(dat.virtualserver_clientsonline + ' / ' + dat.virtualserver_maxclients);
-                           $('.status', row).attr('src', './images/green.png');
-                       } else {
+                        if(dat.virtualserver_status == 'online') {
+                            var time = sec2date(dat.virtualserver_uptime);
+                            var time_str = time[0] + 'd ';
+                            time_str += ((time[1] < 10) ? '0' + time[1] : time[1]) + ":";
+                            time_str += ((time[2] < 10) ? '0' + time[2] : time[2]) + ":";
+                            time_str += ((time[3] < 10) ? '0' + time[3] : time[3]);
+                            $('.uptime', row).text(time_str);
+                            $('.clients', row).text(dat.virtualserver_clientsonline + ' / ' + dat.virtualserver_maxclients);
+                            $('.status', row).attr('src', './images/green.png');
+                            $('.tools', row).html([
+                                '<img src="./images/stop.png" class="btn_stop" />',
+                                '<img src="./images/settings.png" class="btn_edit" />', 
+                                '<img src="./images/delete.png" class="btn_delete" />'
+                            ].join(' '));
+                        } else {
                             $('.uptime, .clients', row).text('');
-                           $('.status', row).attr('src', './images/red.png');
-                       }
+                            $('.status', row).attr('src', './images/red.png');
+                            $('.tools', row).html([
+                                '<img src="./images/start.png" class="btn_start" />',
+                                '<img src="./images/delete.png" class="btn_delete" />'
+                            ].join(' '));
+                        }
 
                     }
                 }
@@ -45,6 +54,7 @@ var TS3Webinterface = {
                 self.executePost(
                     {do: "deleteserver", serverid: sid}, 
                     function(data) {
+                        TS3Webinterface.updateServers();
                         console.log(data);
                     }
                 );
@@ -58,7 +68,7 @@ var TS3Webinterface = {
             { "do": "startserver", serverid: sid }, 
             function(data) {
                 if(data[0] == "OK") {
-                    $('#serverstatus' + sid).attr('src', './images/green.png');
+                    TS3Webinterface.updateServers();
                 } else {
                     console.log(data);
                     console.log(data[0]);
@@ -74,7 +84,7 @@ var TS3Webinterface = {
             { "do": "stopserver", serverid: sid }, 
             function(data) {
                 if(data[0] == "OK") {
-                    $('#serverstatus' + sid).attr('src', './images/red.png');
+                    TS3Webinterface.updateServers();
                 } else {
                     console.log(data);
                     console.log(data[0]);
@@ -104,25 +114,26 @@ var TS3Webinterface = {
 
 
 $(function() {
-    $('.btn_delete').click(function() {
+    $('.btn_delete').live('click', function() {
         var vsid = parseInt($(this.parentElement.parentElement).data('vid'));
         TS3Webinterface.deleteServer(vsid);
     });
-    $('.btn_start').click(function() {
+    $('.btn_start').live('click', function() {
         var vsid = parseInt($(this.parentElement.parentElement).data('vid'));
         TS3Webinterface.startServer(vsid);
     });
 
-    $('.btn_stop').click(function() {
+    $('.btn_stop').live('click', function() {
         var vsid = parseInt($(this.parentElement.parentElement).data('vid'));
         TS3Webinterface.stopServer(vsid);
     });
 
-    $('.btn_create').click(function() {
+    $('.btn_refresh').live('click', function() {
+        TS3Webinterface.updateServers();
+    });
+
+    $('.btn_create').live('click', function() {
         $.blockUI({ message: $('#form_create'), css: {  cursor: ''} }); 
     });
 
-    setInterval(function() {
-        TS3Webinterface.updateServers();
-    }, 5000);
 });
